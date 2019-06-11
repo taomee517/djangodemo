@@ -1,3 +1,6 @@
+import json
+
+from django.core import serializers
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Brand
@@ -20,5 +23,12 @@ def brand_list(request):
     print(brands)
     # 将数据传递给模板,模板再渲染页面，将渲染好的页面返回给浏览器
     return render(request, 'carbrand/brandList.html', {'brands': brands})
+
+
+def brand_json_list(request):
+    # 去模板里取数据
+    brands = Brand.objects.all()
+    brandsjson = serializers.serialize("json", brands)
+    return HttpResponse(brandsjson)
 
 

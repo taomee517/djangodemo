@@ -1,0 +1,25 @@
+1. python manage.py makemigrations
+    发生异常：AttributeError: 'bytes' object has no attribute 'encode'
+    解决方案：在djangodemo __init__.py中加入PyMysql配置
+            import pymysql
+
+            pymysql.version_info = (1, 3, 13, "final", 0)
+            pymysql.install_as_MySQLdb()
+
+2. python manage.py migrate
+    发生异常：pymysql.err.InternalError: (1824, "Failed to open the referenced table 'users_user'")
+    解决方案：在数据库db_demo中创建表users_user,包含字段：id(主键),username,nickname,password,first_name,last_name,email,date_joined, last_login,is_superuser,is_active,is_staff
+
+3. python manage.py createsuperuser
+    用户名：root
+    密码：123456
+    邮箱： taomee@qq.com
+
+4. python manage.py runserver 9000
+5. 浏览器访问：http://localhost:9000/admin
+6. 用 root - 123456 登录
+
+7. 创建新用户时报错
+    异常：db_demo.users_user_groups, db_demo.users_user_user_permissions不存在
+    解决方案：创建db_demo.users_user_groups，包含字段user_id, group_id
+            创建db_demo.users_user_user_permissions, 包含字段user_id, permission_id
